@@ -11,15 +11,9 @@
         }
     ],
     "subtasks": [{
-            "id": 1,
-            "todoId": 1,
-            "body": "some comment",
-            "postId": 1
-        },
-        {
-            "id": 2,
-            "body": "some comment",
-            "postId": 1
-        }
-    ]
+        "id": 1,
+        "todoId": 1,
+        "body": "some comment",
+        "postId": 1
+    }]
 }
