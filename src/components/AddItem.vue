@@ -1,0 +1,31 @@
+<template>
+  <div class="add-item container">
+    <h3>AddItem</h3>
+    <form name="todo-form" method="post" action v-on:submit.prevent="addTask(newItemInput)">
+      <input class="rounded" v-model="newItemInput" placeholder="edit me" />
+      <button class="rounded" type="submit">Add new Item</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import { mapMutations, mapActions } from "vuex";
+export default {
+  name: "AddItem",
+  data() {
+    return {
+      newItemInput: ""
+    };
+  },
+  methods: {
+    ...mapActions(["addItemAction"]),
+    addTask() {
+      this.addItemAction(this.newItemInput);
+      this.newItemInput = "";
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+</style>
