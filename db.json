@@ -1,11 +1,11 @@
 {
-    "todos": [{
+    "tasks": [{
             "id": 1,
             "title": "Post 1",
             "status": 1
         },
         {
-            "id": 1,
+            "id": 2,
             "title": "Post 2",
             "status": 1
         }

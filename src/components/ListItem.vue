@@ -7,7 +7,7 @@
 
 <script>
 import Item from "@/components/Item.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "ListItem",
@@ -17,10 +17,16 @@ export default {
   data() {
     return {};
   },
+  methods:{
+    ...mapActions({ sync: "getTasksFromServerAction" })
+  },
+  mounted() {
+    this.sync();
+  },
   computed: {
     ...mapGetters({
       getToDoList: "getToDoList"
-    })
+    }),
   }
 };
 </script>

@@ -18,9 +18,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addItemAction"]),
+    ...mapActions(["addTaskToServerAction"]),
+    
     addTask() {
-      this.addItemAction(this.newItemInput);
+      this.addTaskToServerAction(this.newItemInput);
       this.newItemInput = "";
     }
   }
