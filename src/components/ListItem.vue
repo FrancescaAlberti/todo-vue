@@ -27,6 +27,7 @@ export default {
     ...mapGetters({
       getToDoList: "getToDoList"
     }),
+
   }
 };
 </script>

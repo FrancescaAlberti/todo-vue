@@ -7,12 +7,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         todos: [
-            { id: 0, title: 'todo 1', status: 1 }
+
         ]
     },
     getters: {
         getToDoList: state => {
-            return state.todos;
+            return state.todos.reverse();
         }
     },
     mutations: {
@@ -40,43 +40,43 @@ export default new Vuex.Store({
     },
     actions: {
         getTasksFromServerAction: function(context) {
-            axios.get("http://localhost:3000/tasks").then(result => {
-                context.commit("syncMutation", { type: "todos", data: result.data })
-            }, error => {
-                console.log(error);
-            });
+            debugger;
+            let result = JSON.parse(localStorage.getItem('to-do'));
+            if (!result) {
+                localStorage.setItem('to-do', JSON.stringify([{ id: 1, title: 'default', status: 1 }]))
+            }
+            context.commit("syncMutation", {
+                type: "todos",
+                data: result || [{ id: 1, title: 'default', status: 1 }]
+            })
+
         },
         addTaskToServerAction: function({ context, dispatch }, itemTitle) {
+            let result = JSON.parse(localStorage.getItem('to-do'));
+            let newId = result[(result.length - 1)].id + 1;
+            debugger;
+            result.push({ id: newId, title: itemTitle, status: 1 })
 
-            axios.post("http://localhost:3000/tasks", {
-                title: itemTitle,
-                status: 1
-            }).then(result => {
-                dispatch('getTasksFromServerAction', context)
-            }, error => {
-                console.log(error);
-            });
+            localStorage.setItem('to-do', JSON.stringify(result));
+            dispatch('getTasksFromServerAction', context)
+
         },
         removeTaskFromServerAction: function({ context, dispatch }, payload) {
-            axios.delete('http://localhost:3000/tasks/' + payload)
-                .then(resp => {
-                    dispatch('getTasksFromServerAction', context)
-                }).catch(error => {
-                    console.log(error);
-                });
+            debugger;
+            let result = JSON.parse(localStorage.getItem('to-do'));
+            let taskIdToRemove = result.findIndex(t => t.id === payload);
+            result.splice(taskIdToRemove, 1);
+            localStorage.setItem('to-do', JSON.stringify(result));
+
+            dispatch('getTasksFromServerAction', context)
         },
 
         updateStatus: function({ context, dispatch }, payload) {
-            debugger;
-            axios.put('http://localhost:3000/tasks/' + payload.id + '/', {
-                    title: payload.title,
-                    status: payload.status
-                })
-                .then(resp => {
-                    dispatch('getTasksFromServerAction', context)
-                }).catch(error => {
-                    console.log(error);
-                });
+            let result = JSON.parse(localStorage.getItem('to-do'));
+            result.filter(t => t.id === payload.id)[0].status = payload.status;
+            localStorage.setItem('to-do', JSON.stringify(result));
+
+            dispatch('getTasksFromServerAction', context)
 
         }
     },

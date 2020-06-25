@@ -35,7 +35,10 @@ body {
 }
 input {
   border: 1px solid $primary-color;
-  margin-right: 10px;
+  margin: 10px;
+}
+.no-focus-outline{
+  outline: none;
 }
 button {
   border: 0px;
