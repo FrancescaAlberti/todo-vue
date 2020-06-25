@@ -1,19 +1,11 @@
 {
-    "tasks": [{
-            "id": 1,
-            "title": "Post 1",
-            "status": 1
-        },
-        {
-            "id": 2,
-            "title": "Post 2",
-            "status": 1
-        }
-    ],
-    "subtasks": [{
-        "id": 1,
-        "todoId": 1,
-        "body": "some comment",
-        "postId": 1
-    }]
+  "tasks": [],
+  "subtasks": [
+    {
+      "id": 1,
+      "todoId": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ]
 }

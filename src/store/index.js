@@ -40,37 +40,44 @@ export default new Vuex.Store({
     },
     actions: {
         getTasksFromServerAction: function(context) {
-            axios.get("https://my-json-server.typicode.com/FrancescaAlberti/todo-vue/todos").then(result => {
-                debugger;
+            axios.get("http://localhost:3000/tasks").then(result => {
                 context.commit("syncMutation", { type: "todos", data: result.data })
             }, error => {
                 console.log(error);
             });
         },
+        addTaskToServerAction: function({ context, dispatch }, itemTitle) {
 
-
-        addTaskToServerAction: function(context, itemTitle) {
-
-            axios.post("https://my-json-server.typicode.com/FrancescaAlberti/todo-vue/todos", {
-                id: 3,
+            axios.post("http://localhost:3000/tasks", {
                 title: itemTitle,
                 status: 1
-            }, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
             }).then(result => {
-                debugger;
-                /*                 context.commit("syncMutation", { type: "todos", data: result.data }) */
+                dispatch('getTasksFromServerAction', context)
             }, error => {
                 console.log(error);
             });
-
-            /*             context.commit('addNewItemMutation', itemTitle) */
         },
-        updateStatus: function(context, payload) {
-            context.commit('updateStatusMutation', payload)
+        removeTaskFromServerAction: function({ context, dispatch }, payload) {
+            axios.delete('http://localhost:3000/tasks/' + payload)
+                .then(resp => {
+                    dispatch('getTasksFromServerAction', context)
+                }).catch(error => {
+                    console.log(error);
+                });
+        },
+
+        updateStatus: function({ context, dispatch }, payload) {
+            debugger;
+            axios.put('http://localhost:3000/tasks/' + payload.id + '/', {
+                    title: payload.title,
+                    status: payload.status
+                })
+                .then(resp => {
+                    dispatch('getTasksFromServerAction', context)
+                }).catch(error => {
+                    console.log(error);
+                });
+
         }
     },
     modules: {}

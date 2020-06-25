@@ -4,12 +4,12 @@
       <font-awesome-icon
         :icon="['far', 'square']"
         v-show="item.status===1"
-        v-on:click="updateStatus({id:item.id, status:2})"
+        v-on:click="updateStatus({id:item.id, title: item.title, status:2})"
       />
       <font-awesome-icon
         :icon="['far', 'check-square']"
         v-show="item.status===2"
-        v-on:click="updateStatus({id:item.id, status:1})"
+        v-on:click="updateStatus({id:item.id, title: item.title,  status:1})"
       />
       <span>{{item.title}}</span>
       <font-awesome-icon :icon="['far', 'trash-alt']" v-on:click="removeTask(item.id)" />
@@ -17,14 +17,14 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapActions } from "vuex";
 export default {
   props: ["item"],
   methods: {
-    ...mapMutations({
-      removeTask: "removeItemMutation"
-    }),
-    ...mapActions(["updateStatus"])
+    ...mapActions({
+      updateStatus: "updateStatus",
+      removeTask: "removeTaskFromServerAction"
+    })
   }
 };
 </script>
