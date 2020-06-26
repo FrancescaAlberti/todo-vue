@@ -53,7 +53,8 @@ export default new Vuex.Store({
         },
         addTaskToServerAction: function({ context, dispatch }, itemTitle) {
             let result = JSON.parse(localStorage.getItem('to-do'));
-            let newId = result[(result.length - 1)].id + 1;
+            let newId = result.length === 0 ? 1 : (result[(result.length - 1)].id + 1)
+
             debugger;
             result.push({ id: newId, title: itemTitle, status: 1 })
 
